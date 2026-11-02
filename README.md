@@ -1,6 +1,6 @@
 # Foro en línea
 
-Backend para la actividad sumativa DSY2205. La solución implementa dos servicios Spring Boot independientes: gestión de usuarios y funcionalidades del foro. El administrador puede moderar temas y comentarios desde el servicio del foro, así se cubren los roles sin construir un tercer servicio.
+Backend para la actividad sumativa DSY2205. La solución implementa dos servicios Spring Boot independientes con Java 17: gestión de usuarios y funcionalidades del foro. El administrador puede moderar temas y comentarios desde el servicio del foro, así se cubren los roles sin construir un tercer servicio.
 
 ## Alcance
 

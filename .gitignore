@@ -7,6 +7,7 @@
 !*.env.example
 wallet/
 Wallet_*.zip
+entrega-foro-dsy2205.zip
 *.log
 Thumbs.db
 
