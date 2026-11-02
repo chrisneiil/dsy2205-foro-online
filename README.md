@@ -18,7 +18,7 @@ Backend para la actividad sumativa DSY2205. La solución implementa dos servicio
 ## Orden de preparación
 
 1. Ejecuta `database/01_schema.sql` y `database/02_seed.sql` en el esquema Oracle.
-2. Configura `DB_URL`, `DB_USERNAME`, `DB_PASSWORD` y `JWT_SECRET` en el entorno. Para Autonomous Database con Wallet, usa el servicio indicado en `tnsnames.ora`, por ejemplo `jdbc:oracle:thin:@<servicio>?TNS_ADMIN=<ruta-absoluta-al-wallet>`. El secreto JWT debe tener al menos 32 caracteres y ser idéntico en ambos servicios. No subas el Wallet ni contraseñas al repositorio.
+2. Copia `local-oracle.properties.example` a `local-oracle.properties` y complétalo según [la guía de conexión Oracle](docs/conexion_oracle.md). Para Autonomous Database necesitas un Wallet y el alias de servicio de `tnsnames.ora`. No subas el archivo local ni el Wallet al repositorio.
 3. Inicia cada servicio en una terminal:
 
    ```powershell

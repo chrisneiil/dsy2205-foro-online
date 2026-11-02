@@ -174,6 +174,50 @@
       ]
     },
     {
+      "name": "03 - Ver categorías",
+      "request": {
+        "method": "GET",
+        "url": "{{forumUrl}}/categories"
+      }
+    },
+    {
+      "name": "04 - Crear tema",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) { pm.collectionVariables.set('topicId', pm.response.json().id); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Cómo organizar un proyecto Spring Boot\",\n  \"body\": \"Estoy iniciando el backend del foro y quiero comparar buenas prácticas para separar controller, service y repository.\",\n  \"categoryId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{forumUrl}}/topics"
+      }
+    },
+    {
       "name": "04b - Crear segundo tema",
       "request": {
         "method": "POST",
@@ -226,6 +270,57 @@
       }
     },
     {
+      "name": "05 - Buscar temas por texto y categoría",
+      "request": {
+        "method": "GET",
+        "url": "{{forumUrl}}/topics/search?term=Spring&categoryId=1"
+      }
+    },
+    {
+      "name": "06 - Ver tema y comentarios",
+      "request": {
+        "method": "GET",
+        "url": "{{forumUrl}}/topics/{{topicId}}"
+      }
+    },
+    {
+      "name": "07 - Crear comentario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) { pm.collectionVariables.set('commentId', pm.response.json().id); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Se recomienda mantener los controladores delgados y dejar la lógica de negocio en el servicio.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{forumUrl}}/topics/{{topicId}}/comments"
+      }
+    },
+    {
       "name": "07b - Crear segundo comentario",
       "request": {
         "method": "POST",
@@ -275,101 +370,6 @@
             }
           }
         }
-      }
-    },
-    {
-      "name": "03 - Ver categorías",
-      "request": {
-        "method": "GET",
-        "url": "{{forumUrl}}/categories"
-      }
-    },
-    {
-      "name": "04 - Crear tema",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "if (pm.response.code === 201) { pm.collectionVariables.set('topicId', pm.response.json().id); }"
-            ]
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"title\": \"Cómo organizar un proyecto Spring Boot\",\n  \"body\": \"Estoy iniciando el backend del foro y quiero comparar buenas prácticas para separar controller, service y repository.\",\n  \"categoryId\": 1\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": "{{forumUrl}}/topics"
-      }
-    },
-    {
-      "name": "05 - Buscar temas por texto y categoría",
-      "request": {
-        "method": "GET",
-        "url": "{{forumUrl}}/topics/search?term=Spring&categoryId=1"
-      }
-    },
-    {
-      "name": "06 - Ver tema y comentarios",
-      "request": {
-        "method": "GET",
-        "url": "{{forumUrl}}/topics/{{topicId}}"
-      }
-    },
-    {
-      "name": "07 - Crear comentario",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "type": "text/javascript",
-            "exec": [
-              "if (pm.response.code === 201) { pm.collectionVariables.set('commentId', pm.response.json().id); }"
-            ]
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"body\": \"Se recomienda mantener los controladores delgados y dejar la lógica de negocio en el servicio.\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": "{{forumUrl}}/topics/{{topicId}}/comments"
       }
     },
     {
@@ -511,19 +511,6 @@
       }
     },
     {
-      "name": "12d - Eliminar tercer usuario (ADMIN; ejecutar al final)",
-      "request": {
-        "method": "DELETE",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}"
-          }
-        ],
-        "url": "{{usersUrl}}/users/{{user3Id}}"
-      }
-    },
-    {
       "name": "12 - Informe de usuarios (ADMIN)",
       "request": {
         "method": "GET",
@@ -547,6 +534,19 @@
           }
         ],
         "url": "{{forumUrl}}/admin/topics/{{topicId}}/hide"
+      }
+    },
+    {
+      "name": "12d - Eliminar tercer usuario (ADMIN; ejecutar al final)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{usersUrl}}/users/{{user3Id}}"
       }
     },
     {

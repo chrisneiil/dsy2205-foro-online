@@ -1,0 +1,7 @@
+# Copia este archivo como local-oracle.properties y reemplaza los valores.
+# El archivo local real está excluido de Git para no publicar credenciales.
+# Oracle Autonomous: el alias debe existir en wallet/tnsnames.ora.
+DB_URL=jdbc:oracle:thin:@<alias_de_tnsnames>?TNS_ADMIN=C:/Users/Asus/Documents/ChatGPT/fullstack 3/wallet
+DB_USERNAME=<usuario_del_esquema>
+DB_PASSWORD=<clave_de_oracle>
+JWT_SECRET=cambia_esto_por_un_secreto_aleatorio_de_32_o_mas_caracteres

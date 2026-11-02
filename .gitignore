@@ -5,6 +5,7 @@
 .env
 .env.*
 !*.env.example
+local-oracle.properties
 wallet/
 Wallet_*.zip
 entrega-foro-dsy2205.zip

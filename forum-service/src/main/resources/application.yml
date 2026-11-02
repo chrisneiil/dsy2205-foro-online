@@ -1,6 +1,8 @@
 server:
   port: ${SERVER_PORT:8082}
 spring:
+  config:
+    import: optional:file:../local-oracle.properties
   application:
     name: forum-service
   datasource:
