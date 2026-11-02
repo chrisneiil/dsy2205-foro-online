@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "609b21e6-54c7-4fb2-93a5-23c3b80b4700",
     "name": "DSY2205 - Foro en línea",
-    "description": "Flujo de demostración para usuarios, foro, Oracle y moderación. Importa y actualiza los datos entre solicitudes si la base parte con registros existentes.",
+    "description": "Flujo de demostración para usuarios, foro, Oracle y moderación. La instancia local trae estudiante02 como USER y estudiante01 como ADMIN. Los registros nuevos usan las variables newUsername, username2 y username3; cambia esos valores si repites la ejecución.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -16,7 +16,7 @@
     },
     {
       "key": "username",
-      "value": "estudiante01"
+      "value": "estudiante02"
     },
     {
       "key": "password",
@@ -36,11 +36,11 @@
     },
     {
       "key": "username2",
-      "value": "estudiante02"
+      "value": "nuevo_estudiante02"
     },
     {
       "key": "username3",
-      "value": "estudiante03"
+      "value": "nuevo_estudiante03"
     },
     {
       "key": "user2Id",
@@ -64,7 +64,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"{{username}}@correo.cl\",\n  \"password\": \"{{password}}\",\n  \"displayName\": \"Estudiante Foro\"\n}",
+          "raw": "{\n  \"username\": \"{{newUsername}}\",\n  \"email\": \"{{newUsername}}@correo.cl\",\n  \"password\": \"{{password}}\",\n  \"displayName\": \"Estudiante Foro\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -461,7 +461,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+          "raw": "{\n  \"username\": \"{{adminUsername}}\",\n  \"password\": \"{{password}}\"\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -534,6 +534,19 @@
           }
         ],
         "url": "{{forumUrl}}/admin/topics/{{topicId}}/hide"
+      }
+    },
+    {
+      "name": "13b - Ocultar comentario (ADMIN)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{forumUrl}}/admin/comments/{{commentId}}"
       }
     },
     {

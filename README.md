@@ -17,7 +17,7 @@ Backend para la actividad sumativa DSY2205. La solución implementa dos servicio
 
 ## Orden de preparación
 
-1. Ejecuta `database/01_schema.sql` y `database/02_seed.sql` en el esquema Oracle.
+1. En un esquema vacío, ejecuta `database/01_schema.sql` y `database/02_seed.sql` una sola vez. En este equipo ya quedó preparado Oracle XE local (`XEPDB1`) con el esquema `DSY2205_FORUM_APP`, cinco categorías y tres usuarios/temas/comentarios de muestra; no vuelvas a crear las tablas aquí.
 2. Copia `local-oracle.properties.example` a `local-oracle.properties` y complétalo según [la guía de conexión Oracle](docs/conexion_oracle.md). Para Autonomous Database necesitas un Wallet y el alias de servicio de `tnsnames.ora`. No subas el archivo local ni el Wallet al repositorio.
 3. Inicia cada servicio en una terminal:
 
@@ -40,7 +40,7 @@ Backend para la actividad sumativa DSY2205. La solución implementa dos servicio
 | Usuarios | 8081 | `http://localhost:8081/api` |
 | Foro | 8082 | `http://localhost:8082/api` |
 
-El inicio de sesión devuelve un JWT. En Postman se envía como `Authorization: Bearer {{token}}`. El servicio de usuarios crea cuentas como `USER`; la asignación de `ADMIN` requiere una acción administrativa en Oracle:
+El inicio de sesión devuelve un JWT. En Postman se envía como `Authorization: Bearer {{token}}`. El servicio de usuarios crea cuentas como `USER`; en esta instancia de demostración `estudiante01` ya está habilitado como `ADMIN`. En otra base, la asignación de `ADMIN` requiere una acción administrativa en Oracle:
 
 ```sql
 UPDATE FORUM_USERS SET USER_ROLE = 'ADMIN' WHERE USERNAME = 'tu_usuario';
@@ -58,6 +58,10 @@ Después, inicia sesión otra vez para obtener un token con el rol actualizado. 
 ## Entrega y demo
 
 El ZIP de entrega debe incluir ambos proyectos, scripts SQL y colección Postman. Antes de subirlo, completa las variables de conexión a Oracle en tu equipo, registra las operaciones en Git, ejecuta las solicitudes de Postman y captura la verificación de datos en SQL Developer. El guion de `docs/guion_kaltura.md` organiza una presentación de 8 minutos con arranque, registro/login, CRUD, búsquedas, permisos y persistencia Oracle.
+
+En el entorno local actual se verificó el CRUD de usuarios, temas y comentarios; los permisos USER/ADMIN; filtros e informes; y persistencia Oracle. Los conteos confirmados son 3 usuarios, 5 categorías, 3 temas y 3 comentarios. Postman devolvió 200 y JSON para health y categorías. La importación de colecciones en Postman está bloqueada por su pantalla de inicio de sesión en este equipo; el archivo de colección está incluido para importarlo desde una sesión de Postman.
+
+La compilación Maven terminó correctamente para ambos servicios con Java 17 (`mvn -B -DskipTests compile`).
 
 ## Estado de preparación
 

@@ -11,7 +11,7 @@ Duración sugerida: 8 minutos. Grabar con ambos servicios iniciados y Postman, V
 | 3:00–3:40 | Categorías del foro | Consultar categorías y mostrar que hay cinco o más opciones. |
 | 3:40–5:05 | Temas y comentarios | Crear tres temas y tres comentarios, consultar detalle y comentarios, actualizar un tema/comentario y buscar por texto/categoría. |
 | 5:05–5:45 | Informes y persistencia | Mostrar informe de actividad por categoría y ejecutar `database/03_verification.sql` en SQL Developer para comprobar usuarios, temas y comentarios almacenados. |
-| 5:45–6:35 | Git y seguridad | Mostrar el repositorio/historial. Promover la cuenta propia a `ADMIN` con el SQL documentado y volver a iniciar sesión para renovar el token. |
+| 5:45–6:35 | Git y seguridad | Mostrar el repositorio/historial. En la instancia local, `estudiante01` ya tiene rol `ADMIN`; en otra base, asigna el rol con el SQL documentado y vuelve a iniciar sesión para renovar el token. |
 | 6:35–7:35 | Moderación | Con token USER, mostrar un intento rechazado de moderación; con token ADMIN, ocultar un tema o comentario y comprobar que deja de aparecer en la consulta pública. |
 | 7:35–8:10 | Cierre | Resumir CRUD, roles, búsqueda, persistencia Oracle y material entregado. |
 

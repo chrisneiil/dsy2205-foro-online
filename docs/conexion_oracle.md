@@ -2,6 +2,8 @@
 
 Los servicios leen las mismas propiedades locales desde `../local-oracle.properties`. Desde cada carpeta de servicio, esa ruta apunta a la raíz del proyecto. El archivo real queda ignorado por Git.
 
+En el equipo de desarrollo actual ya está activa una instancia Oracle XE en `localhost:1521/XEPDB1`. El esquema de la actividad fue creado en el usuario `DSY2205_FORUM_APP`, y la configuración local se guardó en `local-oracle.properties`, que no se incluye en el ZIP ni en Git.
+
 ## Oracle Autonomous Database con Wallet
 
 1. Descarga el Wallet de cliente de la instancia y descomprímelo en la carpeta `wallet` de la raíz del proyecto. No lo agregues al repositorio.
@@ -16,7 +18,7 @@ Si usas una instancia Oracle local sin Wallet, deja el URL de ejemplo que entreg
 
 ## Crear esquema y levantar los servicios
 
-Conéctate desde SQL Developer como el usuario dueño de las tablas y ejecuta, en este orden:
+En una base nueva, conéctate desde SQL Developer como el usuario dueño de las tablas y ejecuta, en este orden. No repitas estos scripts si las tablas ya existen:
 
 1. `database/01_schema.sql`
 2. `database/02_seed.sql`
