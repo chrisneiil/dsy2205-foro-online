@@ -1,0 +1,579 @@
+{
+  "info": {
+    "_postman_id": "609b21e6-54c7-4fb2-93a5-23c3b80b4700",
+    "name": "DSY2205 - Foro en línea",
+    "description": "Flujo de demostración para usuarios, foro, Oracle y moderación. Importa y actualiza los datos entre solicitudes si la base parte con registros existentes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "usersUrl",
+      "value": "http://localhost:8081/api"
+    },
+    {
+      "key": "forumUrl",
+      "value": "http://localhost:8082/api"
+    },
+    {
+      "key": "username",
+      "value": "estudiante01"
+    },
+    {
+      "key": "password",
+      "value": "ForoDemo2026!"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "topicId",
+      "value": "1"
+    },
+    {
+      "key": "commentId",
+      "value": "1"
+    },
+    {
+      "key": "username2",
+      "value": "estudiante02"
+    },
+    {
+      "key": "username3",
+      "value": "estudiante03"
+    },
+    {
+      "key": "user2Id",
+      "value": ""
+    },
+    {
+      "key": "user3Id",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Registrar usuario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username}}\",\n  \"email\": \"{{username}}@correo.cl\",\n  \"password\": \"{{password}}\",\n  \"displayName\": \"Estudiante Foro\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{usersUrl}}/auth/register"
+      }
+    },
+    {
+      "name": "02 - Iniciar sesión USER",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 200) { pm.collectionVariables.set('token', pm.response.json().token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{usersUrl}}/auth/login"
+      }
+    },
+    {
+      "name": "01b - Registrar segundo usuario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{usersUrl}}/auth/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username2}}\",\n  \"email\": \"{{username2}}@correo.cl\",\n  \"password\": \"{{password}}\",\n  \"displayName\": \"Segundo usuario\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) { pm.collectionVariables.set('user2Id', pm.response.json().id); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "01c - Registrar tercer usuario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{usersUrl}}/auth/register",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username3}}\",\n  \"email\": \"{{username3}}@correo.cl\",\n  \"password\": \"{{password}}\",\n  \"displayName\": \"Tercer usuario\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) { pm.collectionVariables.set('user3Id', pm.response.json().id); }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04b - Crear segundo tema",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{forumUrl}}/topics",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Cómo consultar Oracle desde Spring Data JPA\",\n  \"body\": \"¿Qué revisar cuando un repositorio no recupera los registros que inserté?\",\n  \"categoryId\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "04c - Crear tercer tema",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{forumUrl}}/topics",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Compartir cambios con Git\",\n  \"body\": \"¿Qué flujo de ramas recomiendan para organizar cambios del backend?\",\n  \"categoryId\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "07b - Crear segundo comentario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{forumUrl}}/topics/{{topicId}}/comments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Conviene validar los datos de entrada y devolver errores claros.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "07c - Crear tercer comentario",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{forumUrl}}/topics/{{topicId}}/comments",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"También es útil filtrar por categoría y fecha para facilitar la búsqueda.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "03 - Ver categorías",
+      "request": {
+        "method": "GET",
+        "url": "{{forumUrl}}/categories"
+      }
+    },
+    {
+      "name": "04 - Crear tema",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) { pm.collectionVariables.set('topicId', pm.response.json().id); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Cómo organizar un proyecto Spring Boot\",\n  \"body\": \"Estoy iniciando el backend del foro y quiero comparar buenas prácticas para separar controller, service y repository.\",\n  \"categoryId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{forumUrl}}/topics"
+      }
+    },
+    {
+      "name": "05 - Buscar temas por texto y categoría",
+      "request": {
+        "method": "GET",
+        "url": "{{forumUrl}}/topics/search?term=Spring&categoryId=1"
+      }
+    },
+    {
+      "name": "06 - Ver tema y comentarios",
+      "request": {
+        "method": "GET",
+        "url": "{{forumUrl}}/topics/{{topicId}}"
+      }
+    },
+    {
+      "name": "07 - Crear comentario",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) { pm.collectionVariables.set('commentId', pm.response.json().id); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Se recomienda mantener los controladores delgados y dejar la lógica de negocio en el servicio.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{forumUrl}}/topics/{{topicId}}/comments"
+      }
+    },
+    {
+      "name": "08 - Listar comentarios",
+      "request": {
+        "method": "GET",
+        "url": "{{forumUrl}}/topics/{{topicId}}/comments"
+      }
+    },
+    {
+      "name": "09 - Actualizar tema",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Buenas prácticas para organizar Spring Boot\",\n  \"body\": \"Actualizo la pregunta para incluir separación en controller, service y repository.\",\n  \"categoryId\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{forumUrl}}/topics/{{topicId}}"
+      }
+    },
+    {
+      "name": "10 - Actualizar comentario",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"body\": \"Actualización: el service contiene la lógica y el repository se comunica con Oracle.\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{forumUrl}}/comments/{{commentId}}"
+      }
+    },
+    {
+      "name": "11 - Informe por categoría",
+      "request": {
+        "method": "GET",
+        "url": "{{forumUrl}}/reports/categories"
+      }
+    },
+    {
+      "name": "12a - Iniciar sesión ADMIN después del cambio SQL",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 200) { pm.collectionVariables.set('token', pm.response.json().token); }"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{usersUrl}}/auth/login"
+      }
+    },
+    {
+      "name": "12b - Listar usuarios (ADMIN)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{usersUrl}}/users"
+      }
+    },
+    {
+      "name": "12c - Modificar segundo usuario (ADMIN)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"actualizado02@correo.cl\",\n  \"displayName\": \"Segundo usuario actualizado\",\n  \"active\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{usersUrl}}/users/{{user2Id}}"
+      }
+    },
+    {
+      "name": "12d - Eliminar tercer usuario (ADMIN; ejecutar al final)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{usersUrl}}/users/{{user3Id}}"
+      }
+    },
+    {
+      "name": "12 - Informe de usuarios (ADMIN)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{usersUrl}}/users/report/roles"
+      }
+    },
+    {
+      "name": "13 - Ocultar tema (ADMIN)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{forumUrl}}/admin/topics/{{topicId}}/hide"
+      }
+    },
+    {
+      "name": "14 - Eliminar comentario (dejar para cierre de CRUD)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{forumUrl}}/comments/{{commentId}}"
+      }
+    },
+    {
+      "name": "15 - Eliminar tema (dejar para cierre de CRUD)",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{forumUrl}}/topics/{{topicId}}"
+      }
+    }
+  ]
+}

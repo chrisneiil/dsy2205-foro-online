@@ -1,0 +1,12 @@
+**/target/
+**/.idea/
+**/.vscode/
+*.iml
+.env
+.env.*
+!*.env.example
+wallet/
+Wallet_*.zip
+*.log
+Thumbs.db
+
