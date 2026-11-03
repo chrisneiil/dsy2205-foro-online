@@ -1,40 +1,34 @@
-# Configurar la conexión Oracle
+# Oracle XE local
 
-Los servicios leen las mismas propiedades locales desde `../local-oracle.properties`. Desde cada carpeta de servicio, esa ruta apunta a la raíz del proyecto. El archivo real queda ignorado por Git.
+La instancia usada por ambos servicios está en `localhost:1521/XEPDB1`. El esquema es `DSY2205_FORUM_APP`.
 
-En el equipo de desarrollo actual ya está activa una instancia Oracle XE en `localhost:1521/XEPDB1`. El esquema de la actividad fue creado en el usuario `DSY2205_FORUM_APP`, y la configuración local se guardó en `local-oracle.properties`, que no se incluye en el ZIP ni en Git.
+## Preparación
 
-## Oracle Autonomous Database con Wallet
+1. Conéctate desde SQL Developer como `DSY2205_FORUM_APP`.
+2. Ejecuta `database/01_schema.sql` y luego `database/02_seed.sql`. Estos scripts se ejecutan una vez en un esquema vacío.
+3. Copia `local-oracle.properties.example` a `local-oracle.properties` en la raíz del proyecto y configura la contraseña y el secreto JWT.
 
-1. Descarga el Wallet de cliente de la instancia y descomprímelo en la carpeta `wallet` de la raíz del proyecto. No lo agregues al repositorio.
-2. Abre `wallet/tnsnames.ora` y elige uno de los alias de servicio disponibles, por ejemplo el servicio `low`, `medium` o `high` de tu instancia.
-3. Copia `local-oracle.properties.example` como `local-oracle.properties` en la raíz del proyecto.
-4. Reemplaza el alias JDBC por el servicio de tu `tnsnames.ora`, y completa usuario y contraseña del esquema Oracle. La URL sigue el formato `jdbc:oracle:thin:@<alias>?TNS_ADMIN=<ruta-al-wallet>` publicado por [Oracle](https://docs.oracle.com/en/database/oracle/oracle-database/26/rdfrm/using-wallet-based-mtls-connection.html).
-5. Cambia `JWT_SECRET` por una cadena aleatoria propia de al menos 32 bytes, idéntica en ambos servicios.
+Las credenciales reales permanecen en el archivo local, excluido de Git.
 
-## Oracle local
+## IntelliJ IDEA
 
-Si usas una instancia Oracle local sin Wallet, deja el URL de ejemplo que entrega tu entorno, por ejemplo `jdbc:oracle:thin:@localhost:1521/FREEPDB1`, y completa el usuario/clave del esquema.
+Abre cada `pom.xml` como proyecto Maven, selecciona JDK 17 y espera a que finalice la importación. En las configuraciones de `UsersApplication` y `ForumApplication`, establece el directorio de trabajo en la carpeta del servicio correspondiente. Así `../local-oracle.properties` apunta a la raíz del proyecto.
 
-## Crear esquema y levantar los servicios
+Inicia ambos servicios en procesos separados. Comprueba los endpoints:
 
-En una base nueva, conéctate desde SQL Developer como el usuario dueño de las tablas y ejecuta, en este orden. No repitas estos scripts si las tablas ya existen:
+- `http://localhost:8081/actuator/health`
+- `http://localhost:8082/actuator/health`
 
-1. `database/01_schema.sql`
-2. `database/02_seed.sql`
+## Asignar rol administrador
 
-Luego, en dos terminales, desde la raíz del proyecto:
+Las cuentas se registran con rol `USER`. Para habilitar la moderación, ejecuta en SQL Developer:
 
-```powershell
-cd users-service
-mvn spring-boot:run
+```sql
+UPDATE FORUM_USERS
+SET USER_ROLE = 'ADMIN'
+WHERE USERNAME = '&ADMIN_USERNAME';
+
+COMMIT;
 ```
 
-```powershell
-cd forum-service
-mvn spring-boot:run
-```
-
-Comprueba `http://localhost:8081/actuator/health` y `http://localhost:8082/actuator/health`. Después importa la colección Postman, registra los datos de muestra y verifica su persistencia con `database/03_verification.sql`.
-
-Si la conexión falla, copia el mensaje de error sin incluir la contraseña ni el contenido del Wallet; normalmente indicará si falla el alias, la ruta `TNS_ADMIN`, el usuario o el acceso de red.
+Al ejecutar el script, SQL Developer solicitará el nombre de la cuenta. Vuelve a iniciar sesión desde Postman para emitir un token actualizado.

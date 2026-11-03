@@ -1,25 +1,34 @@
-# Decisiones de alcance para la entrega
+# Arquitectura y alcance
 
-## Servicios seleccionados
+La entrega integra dos servicios independientes que comparten el esquema Oracle del foro.
 
-1. **Usuarios:** crear, consultar, modificar y eliminar cuentas; inicio de sesión; roles `USER` y `ADMIN`.
-2. **Foro:** categorías, búsqueda/visualización/publicación de temas, comentarios y moderación por administrador.
+## Servicios
 
-La moderación queda implementada como una capacidad administrativa del servicio del foro. Esto respeta la instrucción de construir dos de los tres servicios y mantiene explícita la diferencia de privilegios entre los dos roles.
+**Usuarios (`users-service`)**
 
-## Modelo de datos
+- Registro e inicio de sesión con JWT.
+- Consulta, modificación y eliminación de cuentas.
+- Autorización basada en los roles `USER` y `ADMIN`.
+- Reporte de cuentas por rol y estado.
 
-`FORUM_USERS` 1—N `FORUM_TOPICS`; `FORUM_CATEGORIES` 1—N `FORUM_TOPICS`; `FORUM_TOPICS` 1—N `FORUM_COMMENTS`; `FORUM_USERS` 1—N `FORUM_COMMENTS`.
+**Foro (`forum-service`)**
 
-Las cinco categorías superan el mínimo de cinco y se incluyen desde el script de carga. La colección Postman incorpora solicitudes para registrar tres usuarios y crear tres temas y tres comentarios; ejecútalas una vez en una base recién preparada para cumplir el mínimo de tres registros por tabla. Las solicitudes de eliminación se dejan para después de mostrar la evidencia en Oracle.
+- Consulta de categorías.
+- Creación, consulta, modificación y eliminación de temas y comentarios.
+- Búsqueda de temas por texto, categoría y autor.
+- Reporte de actividad por categoría.
+- Moderación administrativa de temas y comentarios.
 
-## Evidencia de evaluación
+## Modelo Oracle
 
-- Git: historial de commits del trabajo y enlace al repositorio.
-- Oracle: script de tablas/categorías y consultas SQL que muestren inserción, modificación, consulta y eliminación.
-- Postman: colección con operaciones CRUD, búsqueda por filtros, autenticación, autorización y moderación.
-- Video: recorrido de 7 a 10 minutos con los servicios ejecutándose y los resultados visibles en Postman y Oracle.
+- `FORUM_USERS` se relaciona con `FORUM_TOPICS` y `FORUM_COMMENTS`.
+- `FORUM_CATEGORIES` se relaciona con `FORUM_TOPICS`.
+- `FORUM_TOPICS` se relaciona con `FORUM_COMMENTS`.
 
-## Punto que se debe confirmar con el docente
+El esquema define las tablas y restricciones en `database/01_schema.sql`. `database/02_seed.sql` crea cinco categorías. `database/03_verification.sql` consulta las filas y resume los conteos.
 
-La pauta menciona dos microservicios complejos, pero la instrucción permite escoger dos de tres y no identifica cuáles consultas califican como complejas. Se implementan filtros combinables en temas y reportes agregados en ambos servicios para entregar evidencia de consultas no triviales.
+## Evidencias
+
+- `postman/Foro_Online.postman_collection.json` recorre las operaciones principales y los permisos.
+- `docs/guion_kaltura.md` organiza una demostración de 7 a 10 minutos.
+- El esquema y los datos se pueden comprobar en SQL Developer.
