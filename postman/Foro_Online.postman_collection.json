@@ -49,6 +49,14 @@
     {
       "key": "user3Id",
       "value": ""
+    },
+    {
+      "key": "newUsername",
+      "value": "nuevo_estudiante01"
+    },
+    {
+      "key": "adminUsername",
+      "value": "nuevo_estudiante01"
     }
   ],
   "item": [
@@ -72,7 +80,22 @@
           }
         },
         "url": "{{usersUrl}}/auth/register"
-      }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (pm.response.code === 201) {",
+              "  const username = pm.collectionVariables.get('newUsername');",
+              "  pm.collectionVariables.set('username', username);",
+              "  pm.collectionVariables.set('adminUsername', username);",
+              "}"
+            ]
+          }
+        }
+      ]
     },
     {
       "name": "02 - Iniciar sesión USER",
