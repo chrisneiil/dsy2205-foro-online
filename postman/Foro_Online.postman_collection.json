@@ -60,7 +60,7 @@
     },
     {
       "key": "adminUsername",
-      "value": "nuevo_estudiante01"
+      "value": "estudiante01"
     }
   ],
   "item": [
@@ -94,7 +94,6 @@
               "if (pm.response.code === 201) {",
               "  const username = pm.collectionVariables.get('newUsername');",
               "  pm.collectionVariables.set('username', username);",
-              "  pm.collectionVariables.set('adminUsername', username);",
               "}"
             ]
           }
