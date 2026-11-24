@@ -62,4 +62,4 @@ El frontend estará en `http://localhost`; los servicios también quedan publica
 
 ## Entrega
 
-El ZIP incluye fuentes Angular y Spring Boot, scripts SQL, colección y entorno de Postman, arquetipo Maven, documentación y configuración Docker. No debe incluir `.env`, `local-oracle.properties`, Wallet ni archivos de compilación.
+El ZIP incluye fuentes Angular y Spring Boot, scripts SQL, colección y entorno de Postman, arquetipo Maven, los README del proyecto y configuración Docker. No debe incluir `.env`, `local-oracle.properties`, Wallet ni archivos de compilación.

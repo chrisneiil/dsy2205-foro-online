@@ -7,9 +7,8 @@ Nexo es un foro web adaptable conectado a tres microservicios Spring Boot y una 
 - Frontend Angular 21 con Bootstrap, navegación responsive, formularios validados, perfil y panel de administración.
 - `users-service`: registro, acceso JWT, consulta/edición de perfil y operaciones administrativas de usuarios.
 - `forum-service`: categorías, temas, comentarios, búsqueda y reportes.
-- `moderation-service`: consulta y ocultamiento de temas y comentarios para el rol `ADMIN`.
+- `moderation-service`: consulta, ocultamiento y restauración de temas y comentarios para el rol `ADMIN`.
 - Scripts SQL, colección y entorno Postman, arquetipo Maven, Dockerfiles, Compose y configuración Nginx.
-- Documentación de ejecución, arquitectura, conexión Oracle, despliegue AWS y guion para la presentación.
 
 ## Arquitectura
 
