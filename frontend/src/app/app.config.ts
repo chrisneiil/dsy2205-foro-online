@@ -22,7 +22,6 @@ export const appConfig: ApplicationConfig = {
       const forum = inject(ForumStore);
       await auth.restore();
       await forum.load();
-      if (auth.isAdmin()) await Promise.allSettled([forum.loadAdmin(), auth.loadUsers()]);
     }),
   ],
 };

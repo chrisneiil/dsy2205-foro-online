@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthStore } from '../services/auth-store';
 import { ForumStore } from '../services/forum-store';
@@ -100,11 +100,19 @@ import { ForumStore } from '../services/forum-store';
     </section>
   `,
 })
-export class AdminPage {
+export class AdminPage implements OnInit {
   readonly forum = inject(ForumStore);
   readonly auth = inject(AuthStore);
   error = '';
   busy = false;
+
+  ngOnInit(): void {
+    void this.forum.loadAdmin();
+    void this.auth.loadUsers().catch(() => {
+      this.error = 'No se pudo cargar la información de miembros.';
+    });
+  }
+
   get visibleComments() {
     return this.forum.adminComments().filter((comment) => !comment.hidden);
   }

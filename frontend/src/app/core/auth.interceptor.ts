@@ -4,7 +4,12 @@ import { AuthTokenStore } from './auth-token.store';
 
 export const authInterceptor: HttpInterceptorFn = (request, next) => {
   const token = inject(AuthTokenStore).token();
-  if (!token || (!request.url.startsWith('/users/') && !request.url.startsWith('/forum/'))) {
+  if (
+    !token ||
+    (!request.url.startsWith('/users/') &&
+      !request.url.startsWith('/forum/') &&
+      !request.url.startsWith('/admin/'))
+  ) {
     return next(request);
   }
 
