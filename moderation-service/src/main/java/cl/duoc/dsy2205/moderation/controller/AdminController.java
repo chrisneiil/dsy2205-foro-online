@@ -36,8 +36,18 @@ public class AdminController {
         return service.hideTopic(id);
     }
 
+    @PutMapping("/topics/{id}/restore")
+    public TopicResponse restoreTopic(@PathVariable Long id) {
+        return service.restoreTopic(id);
+    }
+
     @PutMapping("/comments/{id}/hide")
     public void hideComment(@PathVariable Long id) {
         service.hideComment(id);
+    }
+
+    @PutMapping("/comments/{id}/restore")
+    public void restoreComment(@PathVariable Long id) {
+        service.restoreComment(id);
     }
 }

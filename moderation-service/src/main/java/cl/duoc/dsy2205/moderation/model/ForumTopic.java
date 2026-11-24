@@ -54,4 +54,5 @@ public class ForumTopic {
     public ForumUser getAuthor() { return author; }
     public ForumCategory getCategory() { return category; }
     public void hide() { status = "HIDDEN"; }
+    public void restore() { status = "ACTIVE"; }
 }

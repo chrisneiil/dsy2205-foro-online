@@ -44,4 +44,5 @@ public class ForumComment {
     public ForumTopic getTopic() { return topic; }
     public ForumUser getAuthor() { return author; }
     public void hide() { status = "HIDDEN"; }
+    public void restore() { status = "ACTIVE"; }
 }

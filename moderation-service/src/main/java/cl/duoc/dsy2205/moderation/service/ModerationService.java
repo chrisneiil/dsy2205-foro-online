@@ -39,9 +39,21 @@ public class ModerationService {
         return toTopic(topics.save(topic));
     }
 
+    public TopicResponse restoreTopic(Long id) {
+        ForumTopic topic = topics.findById(id).orElseThrow(() -> notFound("Tema no encontrado"));
+        topic.restore();
+        return toTopic(topics.save(topic));
+    }
+
     public void hideComment(Long id) {
         ForumComment comment = comments.findById(id).orElseThrow(() -> notFound("Comentario no encontrado"));
         comment.hide();
+        comments.save(comment);
+    }
+
+    public void restoreComment(Long id) {
+        ForumComment comment = comments.findById(id).orElseThrow(() -> notFound("Comentario no encontrado"));
+        comment.restore();
         comments.save(comment);
     }
 

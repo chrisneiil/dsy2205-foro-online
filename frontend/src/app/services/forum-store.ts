@@ -118,6 +118,23 @@ export class ForumStore {
     );
   }
 
+  async restoreTopic(topicId: number): Promise<void> {
+    const topic = await this.api.restoreTopic(topicId);
+    const restored = this.toTopic(topic);
+    this.adminTopics.update((items) => items.map((item) => (item.id === topicId ? restored : item)));
+    this.topics.update((items) => items.map((item) => (item.id === topicId ? restored : item)));
+  }
+
+  async restoreComment(commentId: number): Promise<void> {
+    await this.api.restoreComment(commentId);
+    this.adminComments.update((items) =>
+      items.map((comment) => (comment.id === commentId ? { ...comment, hidden: false } : comment)),
+    );
+    this.comments.update((items) =>
+      items.map((comment) => (comment.id === commentId ? { ...comment, hidden: false } : comment)),
+    );
+  }
+
   private toTopic(topic: TopicResponse): ForumTopic {
     return {
       id: topic.id,

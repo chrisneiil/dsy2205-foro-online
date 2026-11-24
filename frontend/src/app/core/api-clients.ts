@@ -96,7 +96,15 @@ export class ForumApi {
     return firstValueFrom(this.http.put<TopicResponse>(`${moderationApi}/admin/topics/${id}/hide`, {}));
   }
 
+  restoreTopic(id: number): Promise<TopicResponse> {
+    return firstValueFrom(this.http.put<TopicResponse>(`${moderationApi}/admin/topics/${id}/restore`, {}));
+  }
+
   hideComment(id: number): Promise<void> {
     return firstValueFrom(this.http.put<void>(`${moderationApi}/admin/comments/${id}/hide`, {}));
+  }
+
+  restoreComment(id: number): Promise<void> {
+    return firstValueFrom(this.http.put<void>(`${moderationApi}/admin/comments/${id}/restore`, {}));
   }
 }

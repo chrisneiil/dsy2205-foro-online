@@ -54,12 +54,14 @@ import { ForumStore } from '../services/forum-store';
                 <p>Por {{ topic.author }} · {{ topic.replies }} respuestas</p>
               </div>
               <button
-                class="button button-danger"
+                class="button"
+                [class.button-danger]="!topic.hidden"
+                [class.button-primary]="topic.hidden"
                 type="button"
-                [disabled]="topic.hidden || busy"
-                (click)="hideTopic(topic.id)"
+                [disabled]="busy"
+                (click)="topic.hidden ? restoreTopic(topic.id) : hideTopic(topic.id)"
               >
-                {{ topic.hidden ? 'Oculto' : 'Ocultar' }}
+                {{ topic.hidden ? 'Mostrar' : 'Ocultar' }}
               </button>
             </article>
           }
@@ -79,12 +81,14 @@ import { ForumStore } from '../services/forum-store';
                 <small>{{ comment.author }} · Tema #{{ comment.topicId }}</small>
               </div>
               <button
-                class="button button-danger"
+                class="button"
+                [class.button-danger]="!comment.hidden"
+                [class.button-primary]="comment.hidden"
                 type="button"
-                [disabled]="comment.hidden || busy"
-                (click)="hideComment(comment.id)"
+                [disabled]="busy"
+                (click)="comment.hidden ? restoreComment(comment.id) : hideComment(comment.id)"
               >
-                {{ comment.hidden ? 'Oculto' : 'Ocultar' }}
+                {{ comment.hidden ? 'Mostrar' : 'Ocultar' }}
               </button>
             </article>
           }
@@ -126,6 +130,14 @@ export class AdminPage implements OnInit {
 
   async hideComment(id: number): Promise<void> {
     await this.moderate(() => this.forum.hideComment(id));
+  }
+
+  async restoreTopic(id: number): Promise<void> {
+    await this.moderate(() => this.forum.restoreTopic(id));
+  }
+
+  async restoreComment(id: number): Promise<void> {
+    await this.moderate(() => this.forum.restoreComment(id));
   }
 
   private async moderate(action: () => Promise<void>): Promise<void> {
