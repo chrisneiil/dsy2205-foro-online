@@ -4,5 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 public interface CommentRepository extends JpaRepository<ForumComment,Long>{
     List<ForumComment> findByTopicIdAndStatusOrderByCreatedAtAsc(Long topicId,String status);
+    List<ForumComment> findAllByOrderByCreatedAtDesc();
+    long countByTopic_IdAndStatus(Long topicId, String status);
     void deleteByTopic_Id(Long topicId);
 }

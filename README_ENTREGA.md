@@ -1,34 +1,22 @@
-# Arquitectura y alcance
+# Resumen de entrega DSY2205 Experiencia 2
 
-La entrega integra dos servicios independientes que comparten el esquema Oracle del foro.
+Nexo es un foro web adaptable conectado a tres microservicios Spring Boot y una base Oracle compartida. El frontend usa respuestas reales de las APIs: las cuentas, publicaciones, comentarios y acciones administrativas se guardan en Oracle.
 
-## Servicios
+## Incluye
 
-**Usuarios (`users-service`)**
+- Frontend Angular 21 con Bootstrap, navegación responsive, formularios validados, perfil y panel de administración.
+- `users-service`: registro, acceso JWT, consulta/edición de perfil y operaciones administrativas de usuarios.
+- `forum-service`: categorías, temas, comentarios, búsqueda y reportes.
+- `moderation-service`: consulta y ocultamiento de temas y comentarios para el rol `ADMIN`.
+- Scripts SQL, colección y entorno Postman, arquetipo Maven, Dockerfiles, Compose y configuración Nginx.
+- Documentación de ejecución, arquitectura, conexión Oracle, despliegue AWS y guion para la presentación.
 
-- Registro e inicio de sesión con JWT.
-- Consulta, modificación y eliminación de cuentas.
-- Autorización basada en los roles `USER` y `ADMIN`.
-- Reporte de cuentas por rol y estado.
+## Arquitectura
 
-**Foro (`forum-service`)**
+Los tres servicios backend se organizan por capas `controller`, `service`, `repository`, `model`, `dto` y `security`. El frontend separa `pages`, `models`, `core` (clientes HTTP y token) y `services` (estado de sesión y foro).
 
-- Consulta de categorías.
-- Creación, consulta, modificación y eliminación de temas y comentarios.
-- Búsqueda de temas por texto, categoría y autor.
-- Reporte de actividad por categoría.
-- Moderación administrativa de temas y comentarios.
+La recuperación automática de contraseña no se encuentra habilitada porque requiere configurar el envío seguro de correo. La pantalla lo informa y deriva al administrador.
 
-## Modelo Oracle
+## Configuración sensible
 
-- `FORUM_USERS` se relaciona con `FORUM_TOPICS` y `FORUM_COMMENTS`.
-- `FORUM_CATEGORIES` se relaciona con `FORUM_TOPICS`.
-- `FORUM_TOPICS` se relaciona con `FORUM_COMMENTS`.
-
-El esquema define las tablas y restricciones en `database/01_schema.sql`. `database/02_seed.sql` crea cinco categorías. `database/03_verification.sql` consulta las filas y resume los conteos.
-
-## Evidencias
-
-- `postman/Foro_Online.postman_collection.json` recorre las operaciones principales y los permisos.
-- `docs/guion_kaltura.md` organiza una demostración de 7 a 10 minutos.
-- El esquema y los datos se pueden comprobar en SQL Developer.
+El archivo `local-oracle.properties`, `.env`, Wallet de Oracle, tokens y credenciales reales se configuran localmente y no se incluyen en Git ni en el ZIP.

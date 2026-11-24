@@ -7,9 +7,11 @@
 .env.*
 !*.env.example
 local-oracle.properties
+.cloud-secrets.properties
 wallet/
 Wallet_*.zip
 entrega-foro-dsy2205.zip
+Exp2_S5_Crhistopher_Adasme_Cortes*.zip
 *.log
 Thumbs.db
 

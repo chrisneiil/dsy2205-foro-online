@@ -1,0 +1,16 @@
+.git
+.idea
+.runlogs
+**/target
+**/node_modules
+**/dist
+**/.angular
+local-oracle.properties
+.cloud-secrets.properties
+.env
+.env.*
+!*.env.example
+wallet
+Wallet_*.zip
+*.zip
+*.log

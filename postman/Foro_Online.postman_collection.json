@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "609b21e6-54c7-4fb2-93a5-23c3b80b4700",
     "name": "DSY2205 - Foro en línea",
-    "description": "Flujo de demostración para usuarios, foro, Oracle y moderación. La instancia local trae estudiante02 como USER y estudiante01 como ADMIN. Los registros nuevos usan las variables newUsername, username2 y username3; cambia esos valores si repites la ejecución.",
+    "description": "Flujo de demostración para usuarios, foro, Oracle y moderación. Configura localmente la variable password en el entorno Postman. Las cuentas y roles disponibles dependen de los datos presentes en la base de datos.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -15,12 +15,16 @@
       "value": "http://localhost:8082/api"
     },
     {
+      "key": "moderationUrl",
+      "value": "http://localhost:8083/api"
+    },
+    {
       "key": "username",
       "value": "estudiante02"
     },
     {
       "key": "password",
-      "value": "ForoDemo2026!"
+      "value": ""
     },
     {
       "key": "token",
@@ -556,7 +560,7 @@
             "value": "Bearer {{token}}"
           }
         ],
-        "url": "{{forumUrl}}/admin/topics/{{topicId}}/hide"
+        "url": "{{moderationUrl}}/admin/topics/{{topicId}}/hide"
       }
     },
     {
@@ -569,7 +573,7 @@
             "value": "Bearer {{token}}"
           }
         ],
-        "url": "{{forumUrl}}/admin/comments/{{commentId}}"
+        "url": "{{moderationUrl}}/admin/comments/{{commentId}}/hide"
       }
     },
     {

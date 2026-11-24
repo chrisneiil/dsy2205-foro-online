@@ -1,0 +1,34 @@
+<header class="topbar" id="top">
+  <a class="brand" routerLink="/" aria-label="Foro Nexo, inicio">
+    <span class="brand-mark">N</span>
+    <span>nexo<span class="brand-dot">.</span><small>COMUNIDAD EN LÍNEA</small></span>
+  </a>
+  <nav class="main-nav" aria-label="Navegación principal">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      >Explorar</a
+    >
+    <a href="#categorias" (click)="goCategories($event)">Categorías</a>
+    @if (auth.currentUser()?.role === 'ADMIN') {
+      <a routerLink="/admin" routerLinkActive="active">Administración</a>
+    }
+  </nav>
+  <div class="top-actions">
+    @if (auth.currentUser(); as user) {
+      <a class="profile-link" routerLink="/profile"
+        ><span class="avatar">{{ initials(user.displayName) }}</span
+        ><span class="profile-name">{{ user.displayName }}</span></a
+      >
+      <button class="button button-quiet mobile-hide" type="button" (click)="signOut()">
+        Salir
+      </button>
+    } @else {
+      <a class="button button-quiet" routerLink="/login">Iniciar sesión</a>
+      <a class="button button-primary" routerLink="/register">Crear cuenta</a>
+    }
+  </div>
+</header>
+<main class="page-shell"><router-outlet /></main>
+<footer class="footer">
+  <span>nexo. · Conversaciones que construyen comunidad</span
+  ><span>Foro en línea · Proyecto DSY2205</span>
+</footer>

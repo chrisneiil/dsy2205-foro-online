@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 public class ForumUserRef {
     @Id private Long id;
     @Column(nullable=false) private String username;
+    @Column(name="DISPLAY_NAME", nullable=false) private String displayName;
     @Column(name="USER_ROLE",nullable=false) private String role;
     @Column(nullable=false) private boolean active;
     protected ForumUserRef() {}
     public Long getId(){return id;}
     public String getUsername(){return username;}
+    public String getDisplayName(){return displayName;}
     public String getRole(){return role;}
     public boolean isActive(){return active;}
 }
