@@ -61,6 +61,11 @@
     {
       "key": "adminUsername",
       "value": "estudiante01"
+    },
+    {
+      "key": "adminPassword",
+      "value": "",
+      "type": "secret"
     }
   ],
   "item": [
@@ -487,7 +492,7 @@
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"username\": \"{{adminUsername}}\",\n  \"password\": \"{{password}}\"\n}",
+          "raw": "{\n  \"username\": \"{{adminUsername}}\",\n  \"password\": \"{{adminPassword}}\"\n}",
           "options": {
             "raw": {
               "language": "json"

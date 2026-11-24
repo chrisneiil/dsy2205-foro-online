@@ -43,11 +43,11 @@ Angular estará disponible en `http://localhost:4200`. El proxy de desarrollo re
 
 ## Recorrido de Postman
 
-Importa `postman/Foro_Online.postman_collection.json` y el entorno que corresponda: `Foro_Online_Docker.postman_environment.json` para Docker local o `Foro_Online_AWS.postman_environment.json` para AWS. En el entorno AWS reemplaza `replace-with-ec2-ip` por la IPv4 pública vigente. Configura `password` localmente como variable secreta. Prueba categorías, registro, inicio de sesión, perfil, creación/lectura de temas, comentarios, permisos por rol, reportes y moderación. Usa cuentas de prueba propias y deja las operaciones de eliminación para el final.
+Importa `postman/Foro_Online.postman_collection.json` y el entorno que corresponda: `Foro_Online_Docker.postman_environment.json` para Docker local o `Foro_Online_AWS.postman_environment.json` para AWS. En el entorno AWS reemplaza `replace-with-ec2-ip` por la IPv4 pública vigente. Configura `password` y `adminPassword` localmente como variables secretas. Prueba categorías, registro, inicio de sesión, perfil, creación/lectura de temas, comentarios, permisos por rol, reportes y moderación. Usa cuentas de prueba propias y deja las operaciones de eliminación para el final.
 
 ## Datos de acceso
 
-La colección Postman no incluye contraseñas. Configura `password` como variable secreta local del entorno. Crea una cuenta desde el formulario; para probar administración, usa una cuenta cuya fila tenga `USER_ROLE = 'ADMIN'`. Si actualizas el rol en Oracle, inicia sesión nuevamente para recibir un JWT con el rol actualizado.
+La colección Postman no incluye contraseñas. Configura `password` y `adminPassword` como variables secretas locales del entorno. Crea una cuenta desde el formulario; para probar administración, usa una cuenta cuya fila tenga `USER_ROLE = 'ADMIN'`. Si actualizas el rol en Oracle, inicia sesión nuevamente para recibir un JWT con el rol actualizado.
 
 La pantalla de recuperación muestra que no hay un proveedor de correo configurado y solicita contactar al administrador. No confirma ni envía correos.
 
